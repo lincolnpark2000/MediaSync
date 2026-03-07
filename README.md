@@ -394,7 +394,7 @@ docker run -d \
   -v /path/to/data:/app/data \
   -e MEDIASYNC_DATA_DIR="/app/data" \
   -e BACKEND_URL="http://localhost:9000" \
-  mediasync:latest
+  lincolnpark2000/mediasync:latest
 ```
 
 启动后访问 `http://你的IP:4399` 即可打开 Web UI。
@@ -426,7 +426,7 @@ docker run -d \
 打开 **PowerShell** 或 **命令提示符**，执行：
 
 ```powershell
-docker pull mediasync:latest
+docker pull lincolnpark2000/mediasync:latest
 ```
 
 #### 3. 创建数据目录
@@ -450,7 +450,7 @@ docker run -d `
   -v D:\MediaSync\data:/app/data `
   -e MEDIASYNC_DATA_DIR="/app/data" `
   -e BACKEND_URL="http://localhost:9000" `
-  mediasync:latest
+  lincolnpark2000/mediasync:latest
 ```
 
 #### 5. 访问 Web UI
@@ -475,7 +475,7 @@ docker run -d `
   -e MEDIASYNC_DATA_DIR="/app/data" `
   -e BACKEND_URL="http://localhost:9000" `
   -e ALL_PROXY="http://你的代理地址:端口" `
-  mediasync:latest
+  lincolnpark2000/mediasync:latest
 ```
 
 > 💡 代理也可以在 Web UI 的 **设置 → 下载设置** 中配置。
@@ -584,7 +584,7 @@ http://NAS的IP地址:4399
 
 ```bash
 # 1. 拉取最新镜像
-docker pull mediasync:latest
+docker pull lincolnpark2000/mediasync:latest
 
 # 2. 停止并删除旧容器（数据不会丢失）
 docker stop mediasync
