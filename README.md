@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="./images/logo.png" alt="MediaSync Logo" width="120" />
-</p>
-
 <h1 align="center">MediaSync</h1>
 
 <p align="center">
@@ -65,8 +61,11 @@
 - **批量操作** — 选中多个任务一键暂停、恢复或取消
 - **速度限制** — 可配置单任务及全局下载速度上限
 
-<!-- 后续在此处添加下载界面截图 -->
-<!-- <p align="center"><img src="./images/screenshots/download.png" alt="下载功能" width="700" /></p> -->
+<p align="center"><img src="./image/单个解析.png" alt="单个解析" width="700" /></p>
+
+<p align="center"><img src="./image/批量解析.png" alt="批量解析" width="700" /></p>
+
+<p align="center"><img src="./image/下载任务.png" alt="下载任务" width="700" /></p>
 
 ### ❤️ 收藏 / 关注列表浏览
 
@@ -79,7 +78,11 @@
 - **Pinterest** — 画板浏览
 - 支持在列表中直接选择并批量下载
 
-### 🔔 订阅追踪（Pro）
+<p align="center"><img src="./image/关注收藏.png" alt="收藏与关注" width="700" /></p>
+
+<p align="center"><img src="./image/关注收藏_我的关注.png" alt="我的关注" width="700" /></p>
+
+### 🔔 订阅追踪
 
 > 详细使用教程请参阅 👉 [订阅功能详解](./guides/subscription-guide.md)
 
@@ -89,6 +92,8 @@
 - **灵活配置** — 自定义扫描间隔、下载数量上限等
 - **状态面板** — 一目了然地查看所有订阅状态和下载统计
 
+<p align="center"><img src="./image/订阅同步.png" alt="订阅追踪" width="700" /></p>
+
 ### 🔍 聚合搜索
 
 > 详细使用教程请参阅 👉 [搜索功能详解](./guides/search-guide.md)
@@ -96,6 +101,8 @@
 - 统一搜索界面，同时搜索 Bilibili、YouTube、抖音
 - 结果分类展示：视频、频道 / 创作者、播放列表
 - 搜索结果可直接下载或创建订阅
+
+<p align="center"><img src="./image/聚合搜索.png" alt="聚合搜索" width="700" /></p>
 
 ### 📻 直播录制
 
@@ -106,6 +113,8 @@
 - 画质选择与文件分段保存
 - 录制文件管理与回放
 
+<p align="center"><img src="./image/直播录制.png" alt="直播录制" width="700" /></p>
+
 ### 📁 文件管理
 
 > 详细使用教程请参阅 👉 [文件管理详解](./guides/file-browser-guide.md)
@@ -114,6 +123,8 @@
 - 在线视频播放预览（基于 ArtPlayer）
 - 图片预览、文件搜索、排序
 - 支持文件夹打包下载
+
+<p align="center"><img src="./image/文件浏览.png" alt="文件管理" width="700" /></p>
 
 ### 🛡️ B站防风控
 
@@ -124,13 +135,23 @@
 - 动态请求头轮换
 - 风控状态实时监测
 
+### 🔔 通知系统
+
+> 详细配置教程请参阅 👉 [通知系统详解](./guides/settings-guide.md#通知系统)
+
+- **多通道支持** — Telegram Bot、企业微信等
+- **事件触发** — 下载完成、下载失败、直播开始、录制完成等
+- **交互式操作** — 通过 Telegram Bot 或企业微信接收通知，支持发送命令控制任务
+- **自定义模板** — 自定义通知消息内容和格式
+- **媒体附件** — 通知中可附加视频缩略图或预览
+
 ### ⚙️ 系统设置
 
 > 详细配置教程请参阅 👉 [系统设置详解](./guides/settings-guide.md)
 
 - **下载设置** — 格式、画质、命名模板、并发数
 - **路径设置** — 自定义下载保存路径
-- **通知系统** — 支持邮件、Webhook 等多种通知渠道
+- **通知系统** — Telegram Bot、企业微信等多种通知渠道
 - **缓存管理** — 一键清理各类缓存数据
 - **暗色 / 亮色主题** — 自由切换
 
