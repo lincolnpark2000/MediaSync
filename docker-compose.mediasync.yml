@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   mediasync:
-    image: lincolnpark/mediasync:latest
+    image: lincolnpark2000/mediasync:latest
     container_name: mediasync
     restart: unless-stopped
     ports:
