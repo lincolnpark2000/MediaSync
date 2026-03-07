@@ -516,7 +516,7 @@ mkdir -p /volume1/docker/mediasync/live_recordings
 ```yaml
 services:
   mediasync:
-    image: mediasync:latest
+    image: lincolnpark2000/mediasync:latest
     container_name: mediasync
     restart: unless-stopped
     ports:
