@@ -1,0 +1,28 @@
+version: "3.8"
+services:
+  mediasync:
+    image: lincolnpark/mediasync:latest
+    container_name: mediasync
+    restart: unless-stopped
+    ports:
+      - 4400:3000
+    volumes:
+      # 请将冒号左边的路径改为你 NAS 上的实际共享文件夹路径
+      - /share/Container/mediasync/downloads:/downloads
+      - /share/Container/mediasync/data:/app/data
+      - /share/Container/mediasync/live_recordings:/live_recordings
+    environment:
+      MEDIASYNC_DATA_DIR: /app/data
+      # 注意：如果后端在另一个容器，localhost 可能不通，建议改用容器名或 NAS IP
+      BACKEND_URL: http://localhost:9000
+    healthcheck:
+      test:
+        - CMD
+        - curl
+        - -f
+        - http://localhost:3000
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+networks: {}
