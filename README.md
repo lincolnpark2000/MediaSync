@@ -27,8 +27,9 @@
 
 项目采用 **Docker 一键部署**，特别适合在 **NAS（群晖 / 威联通 / 极空间等）** 和 **Windows Desktop** 环境中运行。
 
-<!-- 后续在此处添加主界面截图 -->
-<!-- <p align="center"><img src="./images/screenshots/main-ui.png" alt="主界面" width="800" /></p> -->
+<p align="center">
+  <img src="./image/单个解析.png" alt="MediaSync 媒体解析界面" width="100%" />
+</p>
 
 ---
 
@@ -61,11 +62,9 @@
 - **批量操作** — 选中多个任务一键暂停、恢复或取消
 - **速度限制** — 可配置单任务及全局下载速度上限
 
-<p align="center"><img src="./image/单个解析.png" alt="单个解析" width="700" /></p>
-
-<p align="center"><img src="./image/批量解析.png" alt="批量解析" width="700" /></p>
-
-<p align="center"><img src="./image/下载任务.png" alt="下载任务" width="700" /></p>
+<p align="center">
+  <img src="./image/下载任务.png" alt="MediaSync 下载任务界面" width="100%" />
+</p>
 
 ### ❤️ 收藏 / 关注列表浏览
 
@@ -78,9 +77,9 @@
 - **Pinterest** — 画板浏览
 - 支持在列表中直接选择并批量下载
 
-<p align="center"><img src="./image/关注收藏.png" alt="收藏与关注" width="700" /></p>
-
-<p align="center"><img src="./image/关注收藏_我的关注.png" alt="我的关注" width="700" /></p>
+<p align="center">
+  <img src="./image/关注收藏.png" alt="MediaSync 收藏夹界面" width="100%" />
+</p>
 
 ### 🔔 订阅追踪
 
@@ -91,8 +90,234 @@
 - **增量扫描** — 智能识别已处理内容，避免重复下载
 - **灵活配置** — 自定义扫描间隔、下载数量上限等
 - **状态面板** — 一目了然地查看所有订阅状态和下载统计
+- **通知联动** — 扫描和自动下载结果可联动 Telegram / 企业微信推送摘要
 
-<p align="center"><img src="./image/订阅同步.png" alt="订阅追踪" width="700" /></p>
+<p align="center">
+  <img src="./image/订阅同步.png" alt="MediaSync 订阅同步界面" width="100%" />
+</p>
+
+### 🤖 通知与远程命令
+
+> 详细使用教程请参阅 👉 [通知与机器人详解](./guides/notification-guide.md)
+
+- **双渠道推送** — 支持 Telegram Bot 与企业微信应用消息
+- **事件通知** — 下载完成 / 失败、直播开始 / 结束、录制开始 / 完成 / 失败
+- **消息模板** — 支持自定义模板变量，插入标题、平台、文件路径、播放链接、下载链接等信息
+- **远程命令** — 支持通过 Telegram / 企业微信发送命令执行解析、下载、订阅、状态查询
+- **智能识别** — 直接发送链接即可自动判断视频、合集、直播间或主页类型
+- **交互增强** — Telegram 支持封面图、内联按钮和分辨率选择；企业微信适合接收通知和文本命令
+
+<p align="center">
+  <img src="./image/TG通知.png" alt="Telegram 通知效果展示" width="100%" />
+</p>
+
+#### 功能对比
+
+| 功能 | Telegram | 企业微信 |
+|:---:|:---:|:---:|
+| 下载完成通知 | ✅ | ✅ |
+| 下载失败警告 | ✅ | ✅ |
+| 进度汇总提醒 | ✅ | ✅ |
+| 远程命令 | ✅ | ✅（限制中） |
+| 内联按钮 | ✅ | — |
+| 批量操作通知 | ✅ | ✅ |
+
+#### ⚙️ Telegram 机器人配置
+
+##### 第一步：创建 Telegram 机器人
+
+1. 在 Telegram 中搜索并添加 **@BotFather**
+2. 发送命令 `/newbot` 创建新机器人
+3. 按提示填入机器人名称和用户名
+4. 获得 **Bot Token**（格式：`123456789:ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefg`）
+
+##### 第二步：获取 Chat ID
+
+1. 在 Telegram 中搜索并添加 **@userinfobot** 或 **@get_id_bot**
+2. 点击 `/start`，获得你的 **User ID**
+3. 或者向你创建的机器人发送任意消息，然后访问以下 URL 获取：
+   ```
+   https://api.telegram.org/bot<YOUR_BOT_TOKEN>/getUpdates
+   ```
+   查找 `chat.id` 字段
+
+##### 第三步：配置 MediaSync
+
+**方式 A：Web UI 配置（推荐）**
+
+1. 打开 MediaSync 首页
+2. 点击右上角 ⚙️ **设置**
+3. 选择左侧 **通知系统** → **Telegram**
+4. 启用 Telegram 通知
+5. 输入 Bot Token 和 Chat ID
+6. 点击「测试连接」验证配置
+7. 保存设置
+
+**方式 B：环境变量配置**
+
+在 `docker-compose.yml` 中添加环境变量：
+
+```yaml
+environment:
+  TELEGRAM_BOT_TOKEN: "123456789:ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefg"
+  TELEGRAM_CHAT_ID: "your_chat_id"
+```
+
+**方式 C：配置文件**
+
+编辑 `data/config.json`：
+
+```json
+{
+  "notification": {
+    "telegram": {
+      "enabled": true,
+      "bot_token": "123456789:ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefg",
+      "chat_id": "your_chat_id",
+      "notify_start": true,
+      "notify_complete": true,
+      "notify_failed": true,
+      "notify_summary": true,
+      "summary_interval": 3600
+    }
+  }
+}
+```
+
+#### 🏢 企业微信配置
+
+##### 第一步：创建企业微信应用
+
+1. 访问 [企业微信管理后台](https://work.weixin.qq.com/)，登录或注册
+2. 进入 **应用管理** → **创建应用**
+3. 填写应用信息：
+   - **应用名称**：MediaSync 下载通知
+   - **应用类型**：自建应用
+   - **主页链接**：`http://localhost:3000`（本地）
+4. 创建完成后，获得 **AgentID** 和 **Secret**
+
+##### 第二步：获取必要信息
+
+在应用详情页面获取以下信息：
+- **企业ID**（CorpID）- 在企业微信管理后台 → 我的企业 → 企业ID
+- **应用ID**（AgentID）- 应用详情页面
+- **应用Secret** - 应用详情页面
+
+##### 第三步：配置 MediaSync
+
+**方式 A：Web UI 配置（推荐）**
+
+1. 打开 MediaSync 首页
+2. 点击右上角 ⚙️ **设置**
+3. 选择左侧 **通知系统** → **企业微信**
+4. 启用企业微信通知
+5. 输入 CorpID、AgentID、Secret
+6. 输入接收通知的成员 ID 或部门 ID
+7. 点击「测试连接」
+8. 保存设置
+
+**方式 B：环境变量配置**
+
+在 `docker-compose.yml` 中添加环境变量：
+
+```yaml
+environment:
+  WECHAT_CORPID: "your_corp_id"
+  WECHAT_AGENT_ID: "your_agent_id"
+  WECHAT_SECRET: "your_secret"
+  WECHAT_RECEIVER: "user_id_or_@department_id"
+```
+
+**方式 C：配置文件**
+
+编辑 `data/config.json`：
+
+```json
+{
+  "notification": {
+    "wechat": {
+      "enabled": true,
+      "corp_id": "your_corp_id",
+      "agent_id": "your_agent_id",
+      "secret": "your_secret",
+      "receiver": "user_id_or_@department_id",
+      "notify_start": true,
+      "notify_complete": true,
+      "notify_failed": true,
+      "notify_summary": true,
+      "summary_interval": 3600
+    }
+  }
+}
+```
+
+#### 💬 Telegram 远程命令
+
+通过 Telegram 向机器人发送命令进行控制：
+
+| 命令 | 说明 | 示例 |
+|:---:|:---|:---|
+| `/status` | 查看当前下载队列状态 | `/status` |
+| `/pause` | 暂停所有下载 | `/pause` |
+| `/resume` | 继续下载 | `/resume` |
+| `/cancel <id>` | 取消指定任务 | `/cancel abc123` |
+| `/download <url>` | 添加下载任务 | `/download https://www.youtube.com/watch?v=...` |
+| `/list` | 显示下载历史 | `/list` |
+| `/help` | 显示帮助信息 | `/help` |
+
+#### 📢 通知事件类型
+
+**下载相关通知**
+```
+✅ 下载开始
+视频：【抖音小视频】
+URL：https://www.douyin.com/video/xxx
+预计大小：45.2 MB
+开始时间：2024-03-08 10:30:00
+
+---
+
+✅ 下载完成
+视频：【小红书笔记】
+文件：小红书_笔记_xxxxx.mp4（142.5 MB）
+耗时：2 分 15 秒
+下载时间：2024-03-08 10:32:15
+
+⚠️ 下载失败
+视频：YouTube 视频 - xxxxx
+错误：网络连接超时，请检查代理设置
+重试次数：3/3
+```
+
+**订阅相关通知**
+```
+🔔 订阅扫描完成
+订阅：UP主 - 某某某
+新增视频：3 个
+总数：103 个视频
+下载中：已加入 3 个到队列
+时间：2024-03-08 11:00:00
+```
+
+#### 🔒 安全建议
+
+1. **保护敏感信息**：
+   - 不要在公开代码库中提交 Bot Token 或 Secret
+   - 使用环境变量或密钥管理服务存储凭证
+   - `.gitignore` 中应包含 `data/config.json`
+
+2. **权限管理**：
+   - 只在你认信的聊天 ID 发送命令
+   - 定期更新 Bot Token（BotFather → /token）
+   - 删除不再使用的企业微信应用
+
+3. **监控通知**：
+   - 定期检查通知日志（`logs/notification.log`）
+   - 设置合理的通知频率，避免频繁打扰
+
+<p align="center">
+  <img src="./image/通知设置.png" alt="MediaSync 通知设置界面" width="100%" />
+</p>
 
 ### 🔍 聚合搜索
 
@@ -102,7 +327,9 @@
 - 结果分类展示：视频、频道 / 创作者、播放列表
 - 搜索结果可直接下载或创建订阅
 
-<p align="center"><img src="./image/聚合搜索.png" alt="聚合搜索" width="700" /></p>
+<p align="center">
+  <img src="./image/聚合搜索.png" alt="MediaSync 聚合搜索界面" width="100%" />
+</p>
 
 ### 📻 直播录制
 
@@ -113,7 +340,9 @@
 - 画质选择与文件分段保存
 - 录制文件管理与回放
 
-<p align="center"><img src="./image/直播录制.png" alt="直播录制" width="700" /></p>
+<p align="center">
+  <img src="./image/直播录制.png" alt="MediaSync 直播录制界面" width="100%" />
+</p>
 
 ### 📁 文件管理
 
@@ -124,7 +353,9 @@
 - 图片预览、文件搜索、排序
 - 支持文件夹打包下载
 
-<p align="center"><img src="./image/文件浏览.png" alt="文件管理" width="700" /></p>
+<p align="center">
+  <img src="./image/文件浏览.png" alt="MediaSync 文件浏览界面" width="100%" />
+</p>
 
 ### 🛡️ B站防风控
 
@@ -135,23 +366,13 @@
 - 动态请求头轮换
 - 风控状态实时监测
 
-### 🔔 通知系统
-
-> 详细配置教程请参阅 👉 [通知系统详解](./guides/settings-guide.md#通知系统)
-
-- **多通道支持** — Telegram Bot、企业微信等
-- **事件触发** — 下载完成、下载失败、直播开始、录制完成等
-- **交互式操作** — 通过 Telegram Bot 或企业微信接收通知，支持发送命令控制任务
-- **自定义模板** — 自定义通知消息内容和格式
-- **媒体附件** — 通知中可附加视频缩略图或预览
-
 ### ⚙️ 系统设置
 
 > 详细配置教程请参阅 👉 [系统设置详解](./guides/settings-guide.md)
 
 - **下载设置** — 格式、画质、命名模板、并发数
 - **路径设置** — 自定义下载保存路径
-- **通知系统** — Telegram Bot、企业微信等多种通知渠道
+- **通知系统** — 支持 Telegram、企业微信、测试通知、模板编辑与远程命令
 - **缓存管理** — 一键清理各类缓存数据
 - **暗色 / 亮色主题** — 自由切换
 
@@ -403,6 +624,7 @@ docker compose up -d
 | [下载功能详解](./guides/download-guide.md) | 单个 / 批量下载、格式选择、任务管理 |
 | [收藏与关注功能详解](./guides/favorites-guide.md) | 浏览和管理各平台收藏夹与关注列表 |
 | [订阅功能详解](./guides/subscription-guide.md) | 创建订阅、自动扫描与下载 |
+| [通知与机器人详解](./guides/notification-guide.md) | Telegram / 企业微信通知、模板与远程命令 |
 | [搜索功能详解](./guides/search-guide.md) | 跨平台聚合搜索使用方法 |
 | [直播录制详解](./guides/live-recorder-guide.md) | 直播监控、录制与文件管理 |
 | [文件管理详解](./guides/file-browser-guide.md) | 内置文件浏览器与在线播放 |
@@ -454,6 +676,14 @@ docker compose up -d
 - **画质**：最高 4K（取决于平台和账号权限）
 - **音频**：MP3、AAC、OPUS 等
 - 可在下载前自由选择格式和画质
+</details>
+
+<details>
+<summary><b>Q: 支持哪些通知渠道？能否通过机器人发送命令？</b></summary>
+
+支持 **Telegram Bot** 和 **企业微信应用消息**。启用交互命令后，可以直接在聊天窗口中发送链接，或者使用 `解析 / 下载 / 订阅 / 状态 / 帮助` 命令远程操作 MediaSync。
+
+Telegram 支持内联按钮和画质选择；企业微信支持文本命令，若要启用命令回调，还需要配置回调地址、Token 和 EncodingAESKey。
 </details>
 
 > 更多问题请查阅 👉 [完整 FAQ](./guides/faq.md)
